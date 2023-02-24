@@ -371,14 +371,14 @@ void SpinnakerCamera::grabImage(sensor_msgs::Image* image, const std::string& fr
       Spinnaker::GenApi::CEnumerationPtr color_filter_ptr =
           static_cast<Spinnaker::GenApi::CEnumerationPtr>(node_map_->GetNode("PixelColorFilter"));
 
-      Spinnaker::GenICam::gcstring color_filter_str = color_filter_ptr->ToString();
+      Spinnaker::GenICam::gcstring color_filter_str = color_filter_ptr ? color_filter_ptr->ToString() : "";
       Spinnaker::GenICam::gcstring bayer_rg_str = "BayerRG";
       Spinnaker::GenICam::gcstring bayer_gr_str = "BayerGR";
       Spinnaker::GenICam::gcstring bayer_gb_str = "BayerGB";
       Spinnaker::GenICam::gcstring bayer_bg_str = "BayerBG";
 
       // if(isColor_ && bayer_format != NONE)
-      if (color_filter_ptr->GetCurrentEntry() != color_filter_ptr->GetEntryByName("None"))
+      if (color_filter_ptr && color_filter_ptr->GetCurrentEntry() != color_filter_ptr->GetEntryByName("None"))
       {
         if (bitsPerPixel == 16)
         {
